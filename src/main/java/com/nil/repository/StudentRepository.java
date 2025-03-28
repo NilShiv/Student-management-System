@@ -13,11 +13,12 @@ import com.nil.entity.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
 
-	List<Student> findByFirstNameContainingIgnoreCase(String firstName);
+	@Query("SELECT s FROM Student s WHERE LOWER(s.firstName) = LOWER(:firstName)")	
+	List<Student> findByFirstName(@Param("firstName")String firstName);
 
 	Optional<Student> findByUniqueStudentCode(int uniqueStudentCode);
 
 	@Query("SELECT s FROM Student s JOIN s.course c WHERE c.courseName = :courseName")
 	List<Student> findByCourseName(@Param("courseName")String courseName);
 
-}
+} 	

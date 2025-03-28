@@ -85,7 +85,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public List<StudentDTO> getStudentByName(String firstName) throws StudentMSException{	
-		List<Student> list = studentRepository.findByFirstNameContainingIgnoreCase(firstName);
+		List<Student> list = studentRepository.findByFirstName(firstName);
 		List<StudentDTO> studentDTOs = new ArrayList<StudentDTO>();
 		for(Student student : list) {
 			StudentDTO studentDTO = new StudentDTO();

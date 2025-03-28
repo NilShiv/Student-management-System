@@ -25,16 +25,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/student/**").hasRole("STUDENT")
-                .anyRequest().authenticated()
-            )
-            .httpBasic(); // Using HTTP Basic Authentication
+    	http.csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/auth/**").permitAll() // Public endpoints
+            .requestMatchers("/admin/**").hasRole("ADMIN") // Only admins can access /admin/**
+            .requestMatchers("/student/**").hasAnyRole("ADMIN", "STUDENT") // Allow both roles
+            .requestMatchers("/student/**").hasRole("STUDENT") // Other /student/** endpoints restricted to STUDENT
+            .anyRequest().authenticated()
+        )
+        .httpBasic(); // Using HTTP Basic Authentication
 
-        return http.build();
+    return http.build();
     }
 
     @Bean

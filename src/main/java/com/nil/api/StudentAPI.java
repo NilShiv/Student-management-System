@@ -39,19 +39,19 @@ public class StudentAPI {
 		return new ResponseEntity<String>(message, HttpStatus.CREATED);
 	}
 	
-	@PostMapping(value = "/{sId}/{cId}")
+	@PostMapping(value = "/assign/{sId}/{cId}")
 	public ResponseEntity<String> assignCourseToStudent(@PathVariable Long sId,@PathVariable Long cId) throws StudentMSException{
 		String message = studentService.assignCourseToStudent(sId, cId);
 		return new ResponseEntity<String>(message, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/find/{firstName}")
+	@GetMapping(value = "/findbyname/{firstName}")
 	public ResponseEntity<List<StudentDTO>> getStudentByName(@PathVariable String firstName) throws StudentMSException{
 		List<StudentDTO> studentDTOs = studentService.getStudentByName(firstName);
 		return new ResponseEntity<List<StudentDTO>>(studentDTOs, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/find/{courseName}")
+	@GetMapping(value = "/findbycourse/{courseName}")
 	public ResponseEntity<List<StudentDTO>> getStudentByCourse(@PathVariable String courseName) throws StudentMSException{
 		List<StudentDTO> studentDTOs = studentService.getStudentByName(courseName);
 		return new ResponseEntity<List<StudentDTO>>(studentDTOs, HttpStatus.OK);
